@@ -1,33 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Coaching / School Financial Management System
 
-## Getting Started
+Modern replacement for an Excel-based financial tracking sheet.
 
-First, run the development server:
+- Next.js (App Router) + Tailwind UI
+- Supabase (Postgres + Auth + RLS)
+- Google login (Supabase Auth)
+- Daily fee collections + expenses CRUD
+- Monthly summaries + head-wise reporting
+- Automatic email notifications on every new collection/expense entry
+
+---
+
+### 1) Supabase setup
+
+1. Create a Supabase project.
+2. In Supabase SQL Editor, run:
+   - `SUPABASE_SCHEMA.sql`
+3. Configure Google OAuth:
+   - Supabase Dashboard -> Authentication -> Providers -> Google
+   - Add an authorized redirect URL for your environment:
+     - Local dev: `http://localhost:3000/login`
+     - Vercel: `https://<your-domain>/login`
+
+> Note: The schema uses an `heads.type` enum (`income` / `expense`) and enables Row Level Security (RLS) on all tables.
+
+---
+
+### 2) Email setup (Resend)
+
+1. Create a Resend account.
+2. Set these environment variables (see next section).
+
+When you create a new `collection` or `expense`, the server sends an email with the entry details and the updated monthly summary.
+
+---
+
+### 3) Environment variables
+
+Copy `./.env.example` -> `./.env.local` and fill in:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `RESEND_API_KEY`
+- `EMAIL_FROM` (format like `Name <email@domain.com>`)
+
+---
+
+### 4) Local development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open: `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 5) Production deployment (Vercel)
 
-## Learn More
+1. Push this project to GitHub.
+2. Import into Vercel.
+3. In Vercel -> Project Settings -> Environment Variables, set:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `RESEND_API_KEY`
+   - `EMAIL_FROM`
+4. Ensure Google authorized redirect URL matches your deployed domain:
+   - `https://<your-domain>/login`
 
-To learn more about Next.js, take a look at the following resources:
+Then deploy.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### App structure (key paths)
+
+- Dashboard: `src/app/dashboard/*` (single-page tabbed UI)
+- Auth: `src/app/login/page.tsx`
+- API routes:
+  - `src/app/api/heads/*`
+  - `src/app/api/collections/*`
+  - `src/app/api/expenses/*`
+  - `src/app/api/records/route.ts`
+  - `src/app/api/summary/route.ts`
+- Supabase schema:
+  - `SUPABASE_SCHEMA.sql`
 
 ## Deploy on Vercel
 
