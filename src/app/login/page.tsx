@@ -35,7 +35,9 @@ export default function LoginPage() {
     try {
       setLoading(true);
       setErrorMsg(null);
-      const origin = window.location.origin;
+      const origin =
+        process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+        window.location.origin;
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {

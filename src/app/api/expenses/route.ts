@@ -4,6 +4,7 @@ import { requireAuthedUser, toHttpError } from "@/lib/supabase/requireAuth";
 import { parseDateKey, monthKeyFromDate } from "@/lib/financial/month";
 import { fetchMonthlySummary } from "@/lib/financial/summary";
 import { sendNewEntryEmail } from "@/lib/email/sendEmail";
+import { resolveEntryEmailRecipients } from "@/lib/email/recipients";
 
 const ExpenseCreateSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -34,10 +35,11 @@ export async function POST(req: Request) {
 
     if (error) throw error;
 
-    if (user.email) {
+    const recipients = resolveEntryEmailRecipients(user.email);
+    if (recipients.length > 0) {
       const summary = await fetchMonthlySummary(supabase, month);
       await sendNewEntryEmail({
-        to: user.email,
+        to: recipients,
         entryType: "expense",
         subject: `New expense entry (${month})`,
         entryDetails: {

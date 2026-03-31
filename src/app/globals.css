@@ -29,3 +29,18 @@ textarea {
   color: #71717a;
   opacity: 1;
 }
+
+input,
+select,
+textarea {
+  border-color: #e4e4e7;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #18181b;
+  box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.08);
+}

@@ -10,7 +10,7 @@ export type EmailSummaryPayload = {
 };
 
 export async function sendNewEntryEmail(args: {
-  to: string;
+  to: string | string[];
   entryType: "collection" | "expense";
   subject: string;
   entryDetails: Record<string, string | number | null | undefined>;

@@ -8,6 +8,7 @@ Modern replacement for an Excel-based financial tracking sheet.
 - Daily fee collections + expenses CRUD
 - Monthly summaries + head-wise reporting
 - Automatic email notifications on every new collection/expense entry
+- Optional daily report email via Vercel Cron
 
 ---
 
@@ -43,6 +44,9 @@ Copy `./.env.example` -> `./.env.local` and fill in:
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `RESEND_API_KEY`
 - `EMAIL_FROM` (format like `Name <email@domain.com>`)
+- `NEXT_PUBLIC_SITE_URL` (local: `http://localhost:3000`, prod: your Vercel domain)
+- `REPORT_EMAIL_TO` (single email or comma-separated list)
+- `CRON_SECRET` (strong random value for securing daily report endpoint)
 
 ---
 
@@ -65,10 +69,31 @@ Open: `http://localhost:3000`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `RESEND_API_KEY`
    - `EMAIL_FROM`
+   - `NEXT_PUBLIC_SITE_URL`
+   - `REPORT_EMAIL_TO`
+   - `CRON_SECRET`
 4. Ensure Google authorized redirect URL matches your deployed domain:
    - `https://<your-domain>/login`
 
 Then deploy.
+
+---
+
+### 6) Daily report email setup
+
+Daily report endpoint:
+- `GET /api/reports/daily`
+
+Security:
+- Requires `Authorization: Bearer <CRON_SECRET>`
+
+Cron schedule:
+- Configured in `vercel.json`
+- Current schedule: `0 18 * * *` (daily at 18:00 UTC)
+
+Report receiver:
+- Comes from `REPORT_EMAIL_TO`
+- Supports multiple emails separated by commas
 
 ---
 

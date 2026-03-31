@@ -1,16 +1,25 @@
 "use client";
 
 import { useMemo, type ReactNode } from "react";
-import { ChevronLeft, ChevronRight, LogOut } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  HandCoins,
+  Receipt,
+  Table2,
+  ChartColumnBig,
+  SlidersHorizontal,
+  LogOut,
+} from "lucide-react";
 
 export type DashboardTab = "collection" | "expense" | "records" | "summary" | "heads";
 
 const tabs: Array<{ id: DashboardTab; label: string; icon: ReactNode }> = [
-  { id: "collection", label: "Add Collection", icon: <span className="text-lg">💰</span> },
-  { id: "expense", label: "Add Expense", icon: <span className="text-lg">🧾</span> },
-  { id: "records", label: "Records", icon: <span className="text-lg">📚</span> },
-  { id: "summary", label: "Summary", icon: <span className="text-lg">📈</span> },
-  { id: "heads", label: "Heads", icon: <span className="text-lg">⚙️</span> },
+  { id: "collection", label: "Add Collection", icon: <HandCoins size={18} /> },
+  { id: "expense", label: "Add Expense", icon: <Receipt size={18} /> },
+  { id: "records", label: "Records", icon: <Table2 size={18} /> },
+  { id: "summary", label: "Summary", icon: <ChartColumnBig size={18} /> },
+  { id: "heads", label: "Heads", icon: <SlidersHorizontal size={18} /> },
 ];
 
 export default function Sidebar(props: {

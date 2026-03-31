@@ -37,6 +37,7 @@ export default function DashboardClient() {
   const [activeTab, setActiveTab] = useState<DashboardTab>("summary");
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [refreshSignal, setRefreshSignal] = useState(0);
+  const appVersion = "v1.0.0";
 
   const defaultMonthKey = useMemo(() => monthKeyFromDate(new Date()), []);
   const monthOptions = useMemo(
@@ -126,8 +127,19 @@ export default function DashboardClient() {
         />
         <main className="flex-1 p-3 md:p-6 overflow-x-hidden">
           <div className="max-w-6xl mx-auto space-y-4">
+            <div className="rounded-2xl border bg-gradient-to-r from-zinc-900 to-zinc-700 text-white p-4 md:p-5 shadow-sm">
+              <div className="text-xs uppercase tracking-wide text-zinc-300">
+                Mahteck Coach Finance
+              </div>
+              <div className="mt-1 text-xl md:text-2xl font-semibold">
+                Coaching / School Financial Management System
+              </div>
+              <div className="mt-1 text-sm text-zinc-200">
+                Fast daily entries, cleaner reports, better control.
+              </div>
+            </div>
             {activeTab === "collection" ? (
-              <section className="space-y-3">
+              <section className="space-y-3 rounded-2xl border bg-white p-4 md:p-5 shadow-sm">
                 <div>
                   <h2 className="text-xl font-semibold">Add Collection</h2>
                   <div className="text-sm text-zinc-600">
@@ -146,7 +158,7 @@ export default function DashboardClient() {
             ) : null}
 
             {activeTab === "expense" ? (
-              <section className="space-y-3">
+              <section className="space-y-3 rounded-2xl border bg-white p-4 md:p-5 shadow-sm">
                 <div>
                   <h2 className="text-xl font-semibold">Add Expense</h2>
                   <div className="text-sm text-zinc-600">
@@ -165,7 +177,7 @@ export default function DashboardClient() {
             ) : null}
 
             {activeTab === "records" ? (
-              <section className="space-y-3">
+              <section className="space-y-3 rounded-2xl border bg-white p-4 md:p-5 shadow-sm">
                 <div>
                   <h2 className="text-xl font-semibold">Records</h2>
                   <div className="text-sm text-zinc-600">
@@ -186,7 +198,7 @@ export default function DashboardClient() {
             ) : null}
 
             {activeTab === "summary" ? (
-              <section className="space-y-3">
+              <section className="space-y-3 rounded-2xl border bg-white p-4 md:p-5 shadow-sm">
                 <div>
                   <h2 className="text-xl font-semibold">Summary</h2>
                   <div className="text-sm text-zinc-600">
@@ -202,7 +214,7 @@ export default function DashboardClient() {
             ) : null}
 
             {activeTab === "heads" ? (
-              <section className="space-y-3">
+              <section className="space-y-3 rounded-2xl border bg-white p-4 md:p-5 shadow-sm">
                 <div>
                   <h2 className="text-xl font-semibold">Heads (Income / Expense)</h2>
                   <div className="text-sm text-zinc-600">
@@ -212,6 +224,25 @@ export default function DashboardClient() {
                 <HeadsManager refreshSignal={refreshSignal} />
               </section>
             ) : null}
+
+            <footer className="mt-8 rounded-xl border bg-white p-4 text-sm text-zinc-700 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+              <div>
+                Powered by{" "}
+                <a
+                  href="https://mahteck.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline decoration-zinc-300 hover:decoration-zinc-900"
+                >
+                  Mahteck
+                </a>
+              </div>
+              <div className="flex flex-wrap gap-4 text-zinc-600">
+                <span>Website: mahteck.com</span>
+                <span>Contact: 03010325593</span>
+                <span>Version: {appVersion}</span>
+              </div>
+            </footer>
           </div>
         </main>
       </div>
