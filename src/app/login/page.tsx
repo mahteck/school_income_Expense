@@ -7,13 +7,12 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [supabase, setSupabase] = useState<SupabaseClient | null>(null);
+  const [supabase] = useState<SupabaseClient | null>(() => {
+    if (typeof window === "undefined") return null;
+    return getSupabaseBrowserClient();
+  });
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  useEffect(() => {
-    setSupabase(getSupabaseBrowserClient());
-  }, []);
 
   useEffect(() => {
     if (!supabase) return;
@@ -40,7 +39,7 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${origin}/login`,
+          redirectTo: `${origin}/auth/callback`,
         },
       });
       if (error) throw error;

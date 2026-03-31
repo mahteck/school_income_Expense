@@ -20,7 +20,7 @@ Modern replacement for an Excel-based financial tracking sheet.
    - Supabase Dashboard -> Authentication -> Providers -> Google
    - Add an authorized redirect URL for your environment:
      - Local dev: `http://localhost:3000/login`
-     - Vercel: `https://<your-domain>/login`
+     - Vercel: `https://school-income-expense.vercel.app/login`
 
 > Note: The schema uses an `heads.type` enum (`income` / `expense`) and enables Row Level Security (RLS) on all tables.
 
